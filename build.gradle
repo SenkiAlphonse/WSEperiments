@@ -4,6 +4,7 @@ buildscript {
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.6.RELEASE")
+		classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.13.0')
 	}
 }
 
@@ -14,14 +15,27 @@ plugins {
 
 apply plugin: 'idea'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.palantir.docker'
 
 bootJar {
 	version =  '0.1.0'
 }
 
-group = 'com.alphonse'
+group = 'senkialphonse'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+
+task unpack(type: Copy) {
+	dependsOn bootJar
+	from(zipTree(tasks.bootJar.outputs.files.singleFile))
+	into("build/dependency")
+}
+
+docker {
+	name "${project.group}/${bootJar.archiveFileName}"
+	copySpec.from(tasks.unpack.outputs).into("dependency")
+	buildArgs(['DEPENDENCY': "dependency"])
+}
 
 configurations {
 	developmentOnly

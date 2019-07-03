@@ -22,7 +22,7 @@ bootJar {
 }
 
 group = 'senkialphonse'
-version = '0.0.1-SNAPSHOT'
+version = '0.0.1'
 sourceCompatibility = '1.8'
 
 task unpack(type: Copy) {
@@ -32,7 +32,7 @@ task unpack(type: Copy) {
 }
 
 docker {
-	name "${project.group}/${bootJar.archiveFileName}"
+	name "${project.group}/wsexperiments"
 	copySpec.from(tasks.unpack.outputs).into("dependency")
 	buildArgs(['DEPENDENCY': "dependency"])
 }

@@ -27,6 +27,7 @@ build:
     # http://docs.shippable.com/ci/advancedOptions/retry/
     - mkdir -p shippable/testresults
     #- mkdir -p shippable/codecoverage
+    - gradle test
     - shippable_retry gradle assemble -DskipTests=true
     #- cp -r target shippable/codecoverage
 

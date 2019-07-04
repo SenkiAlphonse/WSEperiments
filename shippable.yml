@@ -26,9 +26,9 @@ build:
     # npm mirrors can sometimes be flacky, better to use shippable_retry
     # http://docs.shippable.com/ci/advancedOptions/retry/
     - mkdir -p shippable/testresults
-    - mkdir -p shippable/codecoverage
+    #- mkdir -p shippable/codecoverage
     - shippable_retry gradle assemble -DskipTests=true
-    - cp -r target shippable/codecoverage
+    #- cp -r target shippable/codecoverage
 
 
 # Integrations are used to connect external resources to CI
